@@ -45,6 +45,7 @@ const JOB_CATEGORIES = [
   'Quantitative Finance',
   'Game Development',
   'UI/UX & Frontend Engineering',
+  'Backend & API Development',
 ];
 
 export default function JobList() {
