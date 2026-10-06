@@ -1,0 +1,59 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Backend - Install Dependencies') {
+            steps {
+                dir('backend') {
+                    bat 'npm install'
+                }
+            }
+        }
+
+        stage('Frontend - Install Dependencies') {
+            steps {
+                dir('frontend') {
+                    bat 'npm install'
+                }
+            }
+        }
+
+        stage('Frontend - Lint') {
+            steps {
+                dir('frontend') {
+                    bat 'npm run lint'
+                }
+            }
+        }
+
+        stage('Frontend - Build') {
+            steps {
+                dir('frontend') {
+                    bat 'npm run build'
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo '================================='
+            echo 'Jenkins Build Successful!'
+            echo '================================='
+        }
+
+        failure {
+            echo '================================='
+            echo 'Jenkins Build Failed!'
+            echo 'Check the Console Output.'
+            echo '================================='
+        }
+    }
+}
